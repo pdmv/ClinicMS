@@ -19,7 +19,7 @@ class MyUser(AbstractUser):
 
     fullname = models.CharField(max_length=200, null=False)
     date_of_birth = models.DateField(null=True)
-    gender = models.CharField(max_length=10, choices=gender_choices, null=False)
+    gender = models.CharField(max_length=10, choices=gender_choices, default='male')
     phone_number = models.CharField(max_length=15, null=True)
     email = models.EmailField(max_length=255, null=True, unique=True)
     avatar = CloudinaryField('avatar', null=True)
@@ -32,6 +32,32 @@ class MyUser(AbstractUser):
 
     def __str__(self):
         return self.fullname
+
+
+class Doctor(models.Model):
+    speciality_choices = [
+        ('Nội khoa', 'Nội khoa'),
+        ('Ngoại khoa', 'Ngoại khoa'),
+        ('Nhi khoa', 'Nhi khoa'),
+        ('Sản khoa', 'Sản khoa'),
+        ('Răng hàm mặt', 'Răng hàm mặt'),
+        ('Da liễu', 'Da liễu'),
+        ('Tim mạch', 'Tim mạch'),
+        ('Thần kinh', 'Thần kinh'),
+        ('Tai mũi họng', 'Tai mũi họng'),
+        ('Mắt', 'Mắt'),
+        ('Nội tiết', 'Nội tiết'),
+        ('Chấn thương chỉnh hình', 'Chấn thương chỉnh hình'),
+        ('Chẩn đoán hình ảnh', 'Chẩn đoán hình ảnh'),
+        ('Y học cổ truyền', 'Y học cổ truyền'),
+    ]
+
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='doctor', null=False)
+    speciality = models.CharField(max_length=50, choices=speciality_choices, null=False)
+    description = models.TextField(null=True)
+
+    def __str__(self):
+        return self.user.fullname
 
 
 class BaseModel(models.Model):
@@ -75,7 +101,7 @@ class Appointment(BaseModel):
     status_choices = [
         ('pending_confirmation', 'Chờ xác nhận'),
         ('confirmed', 'Đã xác nhận'),
-        ('pending_cancellation_confirmation', 'Chờ xác nhận huỷ'),
+        ('pending_cancellation_confirmation', 'Chờ xác nhận huỷ'),  # ????????????
         ('cancelled', 'Đã huỷ'),
         ('examination_in_progress', 'Đang khám'),
         ('exam_completed', 'Đã khám'),
@@ -142,7 +168,7 @@ class PrescriptionDetail(models.Model):
     morning_dose = models.IntegerField(default=0)  # liều sáng
     afternoon_dose = models.IntegerField(default=0)  # liều trưa
     evening_dose = models.IntegerField(default=0)  # liều tối
-    note = models.TextField(null=True, blank=True)  # ghi chú
+    note = models.TextField(null=True)  # ghi chú
 
     def __str__(self):
         return f'{self.prescription} - {self.medicine} - {self.quantity}'
