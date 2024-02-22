@@ -27,7 +27,7 @@ schema_view = get_schema_view(
         default_version='v1',
         description="Our APIs for ClinicApp",
         contact=openapi.Contact(email="2151013110vuong@ou.edu.vn"),
-        license=openapi.License(name="No Copyright"),
+        license=openapi.License(name="No Copyright. Just now!"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),

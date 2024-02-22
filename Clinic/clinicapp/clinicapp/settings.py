@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'drf_yasg',
     'debug_toolbar',
+    'bootstrap_datepicker_plus',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'clinicapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'clinic/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,13 +139,16 @@ cloudinary.config(
     cloud_name="dyuafq1hx",
     api_key="929398868625195",
     api_secret="d8Wfxo3MLa9HX5ueGU0GXaYx1Nc",
-
 )
+
+CLOUDINARY_DOMAIN = 'https://res.cloudinary.com/dyuafq1hx/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5
 }
 
 OAUTH2_PROVIDER = {
@@ -159,3 +163,16 @@ CLIENT_SECRET = 'wwKiKMqRlQ8QvRYGTmbDDg1Q8PlfRqzxIi7Bbigup4A1jSoPOoQGUcrQOEsu80J
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
+
+import os
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '2151013110vuong@ou.edu.vn'
+EMAIL_HOST_PASSWORD = 'Delta7113'
+DEFAULT_FROM_EMAIL = '2151013110vuong@ou.edu.vn'
+
