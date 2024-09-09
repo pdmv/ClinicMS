@@ -1,0 +1,181 @@
+<!--{% extends 'clinic/base.html' %}-->
+<!--{% load static %}-->
+
+<!--{% block content %}-->
+<!--<style>-->
+<!--  .activity-stats {-->
+<!--    width: 100%;-->
+<!--    display: flex;-->
+<!--    flex-direction: row;-->
+<!--    align-items: center;-->
+<!--    justify-content: space-between;-->
+<!--    margin: 0 auto;-->
+<!--  }-->
+
+<!--  .time-filter-navbar {-->
+<!--    display: flex;-->
+<!--    align-items: center;-->
+<!--    gap: 16px;-->
+<!--    padding: 8px;-->
+<!--    border: none;-->
+<!--    border-radius: 10px;-->
+<!--    background-color: #eee;-->
+<!--    width: 100%;-->
+<!--  }-->
+
+<!--  .time-filter-navbar label {-->
+<!--    font-weight: bold;-->
+<!--    margin-right: 8px;-->
+<!--  }-->
+
+<!--  .time-filter-navbar select,-->
+<!--  .time-filter-navbar button {-->
+<!--    padding: 5px;-->
+<!--    border: none;-->
+<!--    border-radius: 4px;-->
+<!--    cursor: pointer;-->
+<!--    background-color: transparent; /* Remove default button background */-->
+<!--  }-->
+
+<!--  .time-filter-navbar select,-->
+<!--  .time-filter-sections .section select {-->
+<!--    width: 100px;-->
+<!--    height: 22px;-->
+<!--    padding: 12px;-->
+<!--    border: 1px solid #007bff;-->
+<!--    border-radius: 8px;-->
+<!--    cursor: pointer;-->
+<!--    background-color: white;-->
+<!--    box-sizing: border-box;-->
+<!--  }-->
+
+<!--  .time-filter-sections {-->
+<!--    display: flex;-->
+<!--    flex-wrap: wrap;-->
+<!--    flex: 1;-->
+<!--  }-->
+
+<!--  .time-filter-sections .section {-->
+<!--    display: none;-->
+<!--    margin-right: 8px;-->
+<!--  }-->
+
+<!--  .time-filter-navbar select:focus,-->
+<!--  .time-filter-sections .section select:focus {-->
+<!--    outline: 2px solid #007bff;-->
+<!--  }-->
+
+<!--  .time-filter-navbar button:hover,-->
+<!--  .time-filter-sections .section select:hover {-->
+<!--    background-color: #ddd;-->
+<!--  }-->
+
+<!--  .time-filter-navbar button:active,-->
+<!--  .time-filter-sections .section select:active {-->
+<!--    background-color: #ccc;-->
+<!--  }-->
+
+<!--  .time-filter-navbar button {-->
+<!--    background-color: #007bff;-->
+<!--    color: #fff;-->
+<!--    font-size: 16px;-->
+<!--    padding: 10px 20px;-->
+<!--    border-radius: 8px;-->
+<!--    transition: 0.2s;-->
+
+<!--    &:hover {-->
+<!--      background-color: #0069d9;-->
+<!--    }-->
+<!--  }-->
+<!--</style>-->
+
+<!--<div class="activity-stats">-->
+<!--  <form method="post" class="swapper" id="timeFilterForm">-->
+<!--    {% csrf_token %}-->
+<!--    <div class="time-filter-navbar">-->
+<!--      <label for="time_filter">Thống kê theo</label>-->
+<!--      <select name="time_filter" id="time_filter" class="nav-link" onchange="handleTimeFilterChange()">-->
+<!--        <option value="month" selected>Tháng</option>-->
+<!--        <option value="quarter">Quý</option>-->
+<!--        <option value="year">Năm</option>-->
+<!--      </select>-->
+
+<!--      <div class="time-filter-sections" id="timeFilterSections">-->
+<!--        <div class="section" id="monthSection" style="display: none;">-->
+<!--          <label for="month">Chọn tháng</label>-->
+<!--          <select name="month" id="month" class="nav-link"></select>-->
+<!--        </div>-->
+
+<!--        <div class="section" id="quarterSection" style="display: none;">-->
+<!--          <label for="quarter">Chọn quý</label>-->
+<!--          <select name="quarter" id="quarter" class="nav-link"></select>-->
+<!--        </div>-->
+
+<!--        <div class="section" id="yearSection" style="display: none;">-->
+<!--          <label for="year">Chọn năm</label>-->
+<!--          <select name="year" id="year" class="nav-link"></select>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <button type="submit" class="nav-link">Thống kê</button>-->
+<!--    </div>-->
+<!--  </form>-->
+
+<!--  <script>-->
+<!--    document.getElementById("time_filter").value = "month";-->
+<!--    handleTimeFilterChange();-->
+
+<!--    function handleTimeFilterChange() {-->
+<!--      var timeFilter = document.getElementById("time_filter").value;-->
+<!--      document.getElementById("monthSection").style.display = "none";-->
+<!--      document.getElementById("quarterSection").style.display = "none";-->
+<!--      document.getElementById("yearSection").style.display = "none";-->
+
+<!--      if (timeFilter === "month") {-->
+<!--        document.getElementById("monthSection").style.display = "flex";-->
+<!--        generateMonths();-->
+<!--      } else if (timeFilter === "quarter") {-->
+<!--        document.getElementById("quarterSection").style.display = "flex";-->
+<!--        generateQuarters();-->
+<!--      } else if (timeFilter === "year") {-->
+<!--        document.getElementById("yearSection").style.display = "flex";-->
+<!--        generateYears();-->
+<!--      }-->
+<!--    }-->
+
+<!--    function generateMonths() {-->
+<!--      var monthSelect = document.getElementById("month");-->
+<!--      monthSelect.innerHTML = "";-->
+<!--      for (var i = 1; i <= 12; i++) {-->
+<!--        var option = document.createElement("option");-->
+<!--        option.value = i;-->
+<!--        option.text = "Tháng " + i;-->
+<!--        monthSelect.add(option);-->
+<!--      }-->
+<!--    }-->
+
+<!--    function generateQuarters() {-->
+<!--      var quarterSelect = document.getElementById("quarter");-->
+<!--      quarterSelect.innerHTML = "";-->
+<!--      for (var i = 1; i <= 4; i++) {-->
+<!--        var option = document.createElement("option");-->
+<!--        option.value = i;-->
+<!--        option.text = "Quý " + i;-->
+<!--        quarterSelect.add(option);-->
+<!--      }-->
+<!--    }-->
+
+<!--    function generateYears() {-->
+<!--      var yearSelect = document.getElementById("year");-->
+<!--      yearSelect.innerHTML = "";-->
+<!--      var currentYear = new Date().getFullYear();-->
+<!--      for (var i = currentYear; i >= currentYear - 10; i&#45;&#45;) {-->
+<!--        var option = document.createElement("option");-->
+<!--        option.value = i;-->
+<!--        option.text = i;-->
+<!--        yearSelect.add(option);-->
+<!--      }-->
+<!--    }-->
+<!--  </script>-->
+<!--</div>-->
+<!--{% endblock %}-->
